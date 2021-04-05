@@ -2,6 +2,7 @@
   "name": "nfactory",
   "version": "0.0.1",
   "description": "Objects factory for Node",
+  "scope": "@marcusgadbem",
   "module": "./src/index",
   "types": "index.d.ts",
   "scripts": {
