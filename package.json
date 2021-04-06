@@ -1,8 +1,21 @@
 {
   "name": "simpl-factory",
   "version": "0.0.1",
-  "description": "Objects factory for Node",
-  "scope": "@marcusgadbem",
+  "description": "Simpl objects factory for Node/JavaScript",
+  "license": "MIT",
+  "repository": "marcusgadbem/simpl-factory",
+  "author": {
+    "name": "Marcus Gadbem",
+    "email": "mcsgad@gmail.com",
+    "url": "https://github.com/marcusgadbem/simpl-factory"
+  },
+  "keywords": [
+    "dummy",
+    "schema",
+    "model",
+    "factory",
+    "seed"
+  ],
   "module": "./src/index",
   "types": "index.d.ts",
   "scripts": {
@@ -33,7 +46,6 @@
     "tslint": "^6.1.3",
     "typescript": "^4.2.3"
   },
-  "license": "MIT",
   "dependencies": {
     "@types/ramda": "^0.27.39",
     "ramda": "^0.27.1"
