@@ -134,3 +134,22 @@ createFactoryList(
   { extra: 'foo' }
 )
 ```
+
+### Todo
+
+- [ ] Create a namespace for the api
+```javascript
+SimplFactory.register(factoryName, factorySchema);
+SimplFactory.create(factoryName, ...traits[], context = {});
+```
+- [ ] Reduce `createFactory` arity complexity by wrapping traits with an Array
+```javascript
+SimplFactory.create(factoryName, traits = [], context = {});
+```
+- [ ] Add generic type to `createFactory` and `createFactoryList`
+- [ ] Improve build version with rollup
+- [ ] Improve readme
+
+## License
+
+MIT © Marcus Gadbem
