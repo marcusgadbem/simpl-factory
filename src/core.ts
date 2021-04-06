@@ -30,7 +30,7 @@ export function renderFactory(
 ): FactorySchema {
   const {
     schema: factorySchema,
-    traits: factoryTraits
+    traits: factoryTraits = {}
   } = registry[factoryName]();
 
   return R.reduce<FactorySchema[], FactorySchema>(
