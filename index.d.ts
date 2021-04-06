@@ -4,9 +4,9 @@ import {
   Args,
 } from './src/types.d';
 
-declare const nfactory: nfactory.Api;
+declare const simplFactory: simplFactory.Api;
 
-declare namespace nfactory {
+declare namespace simplFactory {
   interface Api {
     registerFactory(factoryName: string, factory: Factory): void
 
@@ -20,5 +20,5 @@ declare namespace nfactory {
   }
 }
 
-export = nfactory;
-export as namespace nfactory;
+export = simplFactory;
+export as namespace simplFactory;

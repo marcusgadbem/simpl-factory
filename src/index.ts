@@ -2,4 +2,4 @@ export {
   registerFactory,
   createFactory,
   createFactoryList,
-} from './nfactory';
+} from './simplFactory';

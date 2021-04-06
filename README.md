@@ -1,11 +1,11 @@
-# nfactory
+# simpl-factory
 
 Simple objects factory. WIP.
 
 ## Usage
 
 ```javascript
-import { registerFactory } from 'nfactory';
+import { registerFactory } from 'simpl-factory';
 
 // Register a factory
 registerFactory('BarFactory', () => ({
