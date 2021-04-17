@@ -31,21 +31,21 @@ describe('SimplFactory', () => {
 
       it('throws error when defining a factory without schema', () => {
         expect(() => {
-          // @ts-expect-errors
+          // @ts-expect-error: provided wrong setup to `define` for testing purposes.
           SimplFactory.define('Foo', () => ({
             traits: {
               created: { createdAt: new Date() },
             },
-          }))
+          }));
         }).toThrowError('A schema is required to define a factory.');
       });
 
       it('logs a warning when defining a factory with same name', () => {
-        const spy = jest.spyOn(global.console, 'warn').mockImplementation(() => {})
+        const spy = jest.spyOn(global.console, 'warn').mockImplementation(() => { return; });
 
         const factoryname = 'FooBar';
-        SimplFactory.define(factoryname, () => ({ schema: { foo: 'bar' } }))
-        SimplFactory.define(factoryname, () => ({ schema: { foo: 'bar' } }))
+        SimplFactory.define(factoryname, () => ({ schema: { foo: 'bar' } }));
+        SimplFactory.define(factoryname, () => ({ schema: { foo: 'bar' } }));
 
         expect(spy).toBeCalledWith(`Factory "${factoryname}" was redefined.`);
 
@@ -66,7 +66,7 @@ describe('SimplFactory', () => {
 
         expect(
           SimplFactory.create('Foo', { title })
-        ).toHaveProperty('title', title)
+        ).toHaveProperty('title', title);
       });
     });
 

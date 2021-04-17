@@ -14,11 +14,11 @@ export function define(
   factoryName: string,
   factory: Factory
 ): void {
-  if (!factory().hasOwnProperty('schema')) {
+  if (!Object.prototype.hasOwnProperty.call(factory(), 'schema')) {
     throw new Error('A schema is required to define a factory.');
   }
 
-  if (registry.hasOwnProperty(factoryName)) {
+  if (Object.prototype.hasOwnProperty.call(registry, factoryName)) {
     console.warn(`Factory "${factoryName}" was redefined.`);
   }
 
