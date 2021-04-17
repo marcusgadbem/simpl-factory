@@ -12,6 +12,3 @@ coverage
 
 # eslint
 .eslintcache
-
-# build
-dist
