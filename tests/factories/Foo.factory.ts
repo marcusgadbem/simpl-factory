@@ -3,7 +3,7 @@ import SimplFactory from '../../src';
 
 import './Bar.factory';
 
-SimplFactory.define('FooFactory', () => ({
+SimplFactory.define('Foo', () => ({
   schema: {
     id: faker.datatype.uuid(),
     position: faker.datatype.number(),
@@ -21,7 +21,7 @@ SimplFactory.define('FooFactory', () => ({
     },
 
     withBar: {
-      bar: SimplFactory.create('BarFactory')
+      bar: SimplFactory.create('Bar')
     }
   }
 }));
