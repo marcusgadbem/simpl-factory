@@ -35,7 +35,7 @@ export function renderFactory(
 
   return R.reduce<FactorySchema[], FactorySchema>(
     R.mergeDeepRight,
-    // @ts-expect-error: not able to fix this piece. :(
+    // @ts-expect-error: TypeScript complains about new Object and {}
     new Object(),
     [
       factorySchema,
