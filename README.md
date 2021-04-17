@@ -5,27 +5,25 @@ Simple objects factory. WIP.
 ## Usage
 
 ```javascript
-import { registerFactory } from 'simpl-factory';
+import SimplFactory from 'simpl-factory';
 
 // Register a factory
-registerFactory('BarFactory', () => ({
+SimplFactory.define('User', () => ({
   schema: {
     id: faker.datatype.uuid(),
-    description: faker.lorem.sentence(),
-    date: new Date(),
-    status: 'in_progress',
+    name: faker.lorem.findName(),
+    createdAt: new Date(),
   },
 }));
 
 // Create a Bar object
-const myFactory = createFactory('BarFactory');
+const user = SimplFactory.create('User');
 
 // Output
 {
   id: '7565c1e7-6511-4cab-9b43-4b2c999feaa6',
-  description: 'Quam ipsa beatae sit cupiditate quia dolor magni.',
-  date: 2021-04-05T14:57:38.429Z,
-  status: 'in_progress'
+  name: 'Caitlyn Kerluke',
+  createdAt: '2021-04-05T14:57:38.429Z',
 }
 ```
 
@@ -33,122 +31,111 @@ const myFactory = createFactory('BarFactory');
 
 ```javascript
 // Register a factory with trait
-registerFactory('BarFactory', () => ({
+SimplFactory.define('Post', () => ({
   schema: {
     id: faker.datatype.uuid(),
-    description: faker.lorem.sentence(),
-    date: new Date(),
-    status: 'in_progress',
+    text: faker.lorem.paragraph(),
+    status: 'draft',
   },
 
   traits: {
-    complete: {
-      completedAt: new Date(),
+    published: {
+      status: 'published',
     }
   }
 }));
 
 // Create a Bar object
-const myFactory = createFactory('BarFactory', 'complete');
+const post = SimplFactory.create('Post', 'published');
 
 // Output
 {
   id: '4fb5ddcf-53bb-4714-825f-62c8981f943a',
-  description: 'Accusantium voluptatum vitae atque dolorem.',
-  date: 2021-04-05T14:59:01.149Z,
-  status: 'in_progress'
-  completedAt: 2021-04-05T14:59:01.149Z
+  text: 'axime eveniet accusantium architecto voluptate eum molestiae dolor voluptas. Animi repellendus voluptatem non vitae aut molestiae reprehenderit quibusdam.',
+  status: 'published'
 }
 ```
 
 ## Context
 
 ```javascript
-// Register a factory with trait
-registerFactory('BarFactory', () => ({
+// Register a factory
+SimplFactory.define('Company', () => ({
   schema: {
     id: faker.datatype.uuid(),
-    description: faker.lorem.sentence(),
-    date: new Date(),
-    status: 'in_progress',
+    name: faker.lorem.sentence(),
+    tags: ['grocery', 'market']
   },
 
   traits: {
-    complete: {
-      completedAt: new Date(),
+    local: {
+      localCompany: true,
+    }
+    closed: {
+      closed: true,
     }
   }
 }));
 
 // Create a Bar object
-const myFactory = createFactory('BarFactory', 'complete', { status: 'done', extra: 'foo' });
+const closedLocalCompany = SimplFactory.create('Company', 'local', 'closed', { tags: ['giftshop'] });
 
 // Output
 {
   id: '4fb5ddcf-53bb-4714-825f-62c8981f943a',
-  description: 'Accusantium voluptatum vitae atque dolorem.',
-  date: 2021-04-05T14:59:01.149Z,
-  status: 'done'
-  completedAt: 2021-04-05T14:59:01.149Z
-  extra: 'foo',
+  name: 'Accusantium voluptatum',
+  localCompany: true,
+  closed: true
+  tags: ['giftshop'],
 }
 ```
 
 ## API
 
-### registerFactory('factoryName', factoryFn)
+### SimplFactory.define('factoryName', factoryFn)
 
 ```javascript
-registerFactory('factoryName', () => ({
+SimplFactory.define('factoryName', () => ({
   schema: {},
   traits?: {}
 }))
 ```
 
-### createFactory('factoryName', ...traits?, context?)
+### SimplFactory.create('factoryName', ...traits?, context?)
 
 ```javascript
-createFactory('factoryName')
+SimplFactory.create('factoryName')
 
 // with 1+ traits
-createFactory('factoryName', 'trait1', 'trait2', 'trait3')
+SimplFactory.create('factoryName', 'trait1', 'trait2', 'trait3')
 
 // with context
-createFactory('factoryName', { extra: 'foo' })
+SimplFactory.create('factoryName', { extra: 'foo' })
 
 // with 1+ traits and context
-createFactory(
+SimplFactory.create(
   'factoryName',
   'trait1', 'trait2', 'trait3',
   { extra: 'foo' }
 )
 ```
 
-### createFactoryList('factoryName', <count>, ...traits?, context?)
+### SimplFactory.createList('factoryName', <count>, ...traits?, context?)
 
 ```javascript
-createFactoryList(
+SimplFactory.createList(
   'factoryName',
   5,
   'trait1', 'trait2', 'trait3',
   { extra: 'foo' }
 )
-```
 
-### Todo
-
-- [ ] Create a namespace for the api
-```javascript
-SimplFactory.register(factoryName, factorySchema);
-SimplFactory.create(factoryName, ...traits[], context = {});
+SimplFactory.createList(
+  'factoryName',
+  5,
+  (index) => ({ position: index })
+)
 ```
-- [ ] Reduce `createFactory` arity complexity by wrapping traits with an Array
-```javascript
-SimplFactory.create(factoryName, traits = [], context = {});
-```
-- [ ] Add generic type to `createFactory` and `createFactoryList`
-- [ ] Improve build version with rollup
-- [ ] Improve readme
 
 ## License
 
