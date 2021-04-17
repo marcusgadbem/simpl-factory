@@ -15,7 +15,11 @@ export function define(
   factory: Factory
 ): void {
   if (!factory().hasOwnProperty('schema')) {
-    throw new Error('A schema is required to define a factory.')
+    throw new Error('A schema is required to define a factory.');
+  }
+
+  if (registry.hasOwnProperty(factoryName)) {
+    console.warn(`Factory "${factoryName}" was redefined.`);
   }
 
   registry[factoryName] = factory;
