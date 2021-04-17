@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "esnext",
     "lib": [
       "es6"
     ],
@@ -11,8 +11,7 @@
       "jest",
       "node"
     ],
-    "esModuleInterop": true,
-    "resolveJsonModule": true
+    "esModuleInterop": true
   },
   "exclude": [
     "node_modules",
