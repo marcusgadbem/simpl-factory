@@ -8,11 +8,9 @@ declare const simplFactory: simplFactory.Api;
 
 declare namespace simplFactory {
   interface Api {
-    registerFactory(factoryName: string, factory: Factory): void
-
-    createFactory(factoryName: string, ...args: Args[]): FactorySchema
-
-    createFactoryList(
+    define(factoryName: string, factory: Factory): void
+    create(factoryName: string, ...args: Args[]): FactorySchema
+    createList(
       factoryName: string,
       count: number,
       ...args: Args[],
