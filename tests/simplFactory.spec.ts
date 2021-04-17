@@ -1,90 +1,107 @@
 import SimplFactory from '../src';
 
 import './factories/Foo.factory';
-import './factories/NoTraits.factory';
 
-describe('Factories', () => {
-  test('has default values', () => {
-    const foo = createFactory('FooFactory');
+describe('SimplFactory', () => {
+  describe('#create', () => {
+    describe('schema and traits', () => {
+      it('renders a factory schema without traits', () => {
+        expect(
+          SimplFactory.create('Foo')
+        ).toEqual({
+          id: expect.any(String),
+          position: expect.any(Number),
+          title: expect.any(String),
+          state: expect.any(String),
+        });
+      });
 
-    expect(foo.id).toBeDefined();
-  });
+      it('renders a factory schema with single trait', () => {
+        expect(
+          SimplFactory.create('Foo', 'deleted')
+        ).toHaveProperty('deletedAt', expect.any(Date));
+      });
 
-  test('has overwritten values', () => {
-    const foo = createFactory('FooFactory', { id: 1 });
+      it('renders a factory schema with multiple trait', () => {
+        const foo = SimplFactory.create('Foo', 'deleted', 'completed');
 
-    expect(foo.id).toEqual(1);
-  });
+        expect(foo).toHaveProperty('deletedAt', expect.any(Date));
+        expect(foo).toHaveProperty('state', 'completed');
+      });
 
-  test('without trait', () => {
-    const noTrait = createFactory('NoTraitsFactory');
+      it('throws error when defining a factory without schema', () => {
+        expect(() => {
+          // @ts-expect-errors
+          SimplFactory.define('Foo', () => ({
+            traits: {
+              created: { createdAt: new Date() },
+            },
+          }))
+        }).toThrowError('A schema is required to define a factory.');
+      });
 
-    expect(noTrait.description).toEqual(expect.any(String));
-  });
+      it('logs a warning when defining a factory with same name', () => {
+        const spy = jest.spyOn(global.console, 'warn').mockImplementation(() => {})
 
-  test('accepts traits', () => {
-    const foo = createFactory('FooFactory', 'completed');
+        const factoryname = 'FooBar';
+        SimplFactory.define(factoryname, () => ({ schema: { foo: 'bar' } }))
+        SimplFactory.define(factoryname, () => ({ schema: { foo: 'bar' } }))
 
-    expect(foo.state).toEqual('completed');
-  });
+        expect(spy).toBeCalledWith(`Factory "${factoryname}" was redefined.`);
 
-  test('accepts traits and overrides', () => {
-    const foo = createFactory('FooFactory', 'completed', { position: 2 });
-
-    expect(foo.position).toEqual(2);
-    expect(foo.state).toEqual('completed');
-  });
-
-  test('prio overrides data over traits data', () => {
-    const foo = createFactory('FooFactory', 'completed', { type: 'completed' });
-
-    expect(foo.state).toEqual('completed');
-  });
-
-  test('with another factory as trait', () => {
-    const foo = createFactory('FooFactory', 'withBar');
-
-    expect(foo.bar).toEqual({
-      id: expect.any(String),
-      description: expect.any(String),
-      date: expect.any(Date),
-      status: expect.any(String),
-    })
-  })
-
-  test('with another factory as context', () => {
-    const foo = createFactory('FooFactory', { bar: createFactory('BarFactory', 'done') });
-
-    expect(foo.bar).toEqual({
-      id: expect.any(String),
-      description: expect.any(String),
-      date: expect.any(Date),
-      status: 'done',
-    })
-  })
-});
-
-describe('createFactoryList', () => {
-  test('has 5 factories', () => {
-    const count = 5;
-
-    const foo = createFactoryList(
-      'FooFactory',
-      count,
-      'completed',
-      'deleted',
-      (index) => ({ position: index + 1 })
-    );
-
-    expect(foo.length).toEqual(count);
-
-    expect(foo[4]).toEqual({
-      id: expect.any(String),
-      position: 5,
-      title: expect.any(String),
-      state: 'completed',
-      deletedAt: expect.any(Date),
+        spy.mockRestore();
+      });
     });
 
+    describe('context', () => {
+      it('adds new data to schema', () => {
+        const extra = { bar: 'hey' };
+        const foo = SimplFactory.create('Foo', { extra });
+
+        expect(foo).toHaveProperty('extra', extra);
+      });
+
+      it('overwrites a schema property', () => {
+        const title = 'property overwrite';
+
+        expect(
+          SimplFactory.create('Foo', { title })
+        ).toHaveProperty('title', title)
+      });
+    });
+
+    it('renders a factory schema with traits and overwrites', () => {
+      const foo = SimplFactory.create('Foo', 'completed', 'withBar', { extra: 1 });
+
+      expect(foo).toHaveProperty('state', 'completed');
+      expect(foo).toHaveProperty('bar', expect.objectContaining({ description: expect.any(String) }));
+      expect(foo).toHaveProperty('extra', 1);
+    });
+  });
+
+  describe('#createList', () => {
+    it('renders a list with 5 schemas', () => {
+      const count = 5;
+
+      const foo = SimplFactory.createList(
+        'Foo',
+        count,
+        'completed',
+        'deleted',
+        (index) => ({ position: index })
+      );
+
+      expect(foo.length).toEqual(count);
+
+      foo.map((item, index) =>
+        expect(item).toEqual({
+          id: expect.any(String),
+          position: index,
+          title: expect.any(String),
+          state: 'completed',
+          deletedAt: expect.any(Date),
+        })
+      );
+    });
   });
 });
