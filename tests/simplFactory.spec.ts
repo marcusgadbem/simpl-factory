@@ -1,4 +1,5 @@
-import { createFactory, createFactoryList } from '../src';
+import SimplFactory from '../src';
+
 import './factories/Foo.factory';
 import './factories/NoTraits.factory';
 
