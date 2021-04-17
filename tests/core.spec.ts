@@ -1,10 +1,10 @@
+import faker from 'faker';
+
 import {
   buildTraits,
   processArgs,
   renderFactory,
 } from '../src/core';
-
-import faker from 'faker';
 
 describe('Core', () => {
   describe('buildTraits', () => {
