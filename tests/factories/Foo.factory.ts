@@ -1,9 +1,9 @@
 import faker from 'faker';
-import { registerFactory, createFactory } from '../../src';
+import SimplFactory from '../../src';
 
 import './Bar.factory';
 
-registerFactory('FooFactory', () => ({
+SimplFactory.define('FooFactory', () => ({
   schema: {
     id: faker.datatype.uuid(),
     position: faker.datatype.number(),
@@ -21,7 +21,7 @@ registerFactory('FooFactory', () => ({
     },
 
     withBar: {
-      bar: createFactory('BarFactory')
+      bar: SimplFactory.create('BarFactory')
     }
   }
 }));

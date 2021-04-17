@@ -1,7 +1,7 @@
 import faker from 'faker';
-import { registerFactory } from '../../src';
+import SimplFactory from '../../src';
 
-registerFactory('BarFactory', () => ({
+SimplFactory.define('BarFactory', () => ({
   schema: {
     id: faker.datatype.uuid(),
     description: faker.lorem.sentence(),

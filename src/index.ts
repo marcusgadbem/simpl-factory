@@ -1,5 +1,1 @@
-export {
-  registerFactory,
-  createFactory,
-  createFactoryList,
-} from './simplFactory';
+export * as default from './simplFactory';

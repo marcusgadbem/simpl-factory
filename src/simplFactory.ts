@@ -10,10 +10,14 @@ export const registry: FactoryList = {};
 /**
  * Registers a new factory.
  */
-export function registerFactory(
+export function define(
   factoryName: string,
   factory: Factory
 ): void {
+  if (!factory().hasOwnProperty('schema')) {
+    throw new Error('A schema is required to define a factory.')
+  }
+
   registry[factoryName] = factory;
 }
 
@@ -23,7 +27,7 @@ export function registerFactory(
  * @param args Arguments including traits and/or contextual data
  * @returns object with resolved factory
  */
-export function createFactory(
+export function create(
   factoryName: string,
   ...args: Args[]
 ): FactorySchema {
@@ -43,7 +47,7 @@ export function createFactory(
  * @param args Arguments including traits and/or contextual data
  * @returns
  */
-export function createFactoryList(
+export function createList(
   factoryName: string,
   count = 10,
   ...args: Args[]
