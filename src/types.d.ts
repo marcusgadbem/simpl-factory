@@ -11,10 +11,6 @@ export type FactoryTraits = Record<
   FactorySchema
 >;
 
-/**
- * User inputs
- */
-
 export type Args =
   | string
   | FactorySchema
