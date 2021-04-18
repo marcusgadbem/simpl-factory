@@ -14,4 +14,5 @@ export type FactoryTraits = Record<
 export type Args =
   | string
   | FactorySchema
+  | ((index: number) => FactorySchema)
   | undefined;
