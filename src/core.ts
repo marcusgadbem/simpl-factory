@@ -1,7 +1,4 @@
-import reduce from 'ramda/src/reduce';
-import mergeDeepRight from 'ramda/src/mergeDeepRight';
-import init from 'ramda/src/init';
-import last from 'ramda/src/last';
+import merge from 'deepmerge';
 
 import {
   isObject,
@@ -36,15 +33,13 @@ export function renderFactory(
     traits: factoryTraits = {}
   } = registry[factoryName]();
 
-  return reduce<FactorySchema[], FactorySchema>(
-    mergeDeepRight,
-    // @ts-expect-error: TypeScript complains about new Object and {}
-    new Object(),
-    [
-      factorySchema,
-      ...buildTraits(factoryTraits, traits),
-      context
-    ]
+  return [
+    factorySchema,
+    ...buildTraits(factoryTraits, traits),
+    context
+  ].reduce<FactorySchema>(
+    (acc: FactorySchema, schema) => merge(acc, schema),
+    {}
   );
 }
 
@@ -77,9 +72,9 @@ export function processArgs(args: Args[]): ProcessedArgs {
   let context = {};
 
   if (args.length) {
-    const lastArg: Args = last(args);
+    const lastArg: Args = args.slice().pop();
     // @ts-expect-error: at least one arg will be present
-    const restArgs: string[] = init(args);
+    const restArgs: string[] = args.slice(0, -1);
 
     // context can be either a Object or a Function
     if (isObject(lastArg) || isFunction(lastArg)) {
