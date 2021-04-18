@@ -29,6 +29,25 @@ describe('SimplFactory', () => {
         expect(foo).toHaveProperty('state', 'completed');
       });
 
+      it('renders a factory schema with arrays merged correctly', () => {
+        SimplFactory.define('FooArray', () => ({
+          schema: {
+            myArray: [{ foo: 1 }, { bar: 2 }]
+          }
+        }));
+
+        expect(
+          SimplFactory.create('FooArray', { myArray: [{ foo: 3 }, { name: 'john doe' }]})
+        ).toEqual({
+          myArray: [
+            { foo: 1 },
+            { bar: 2 },
+            { foo: 3 },
+            { name: 'john doe' },
+          ]
+        })
+      })
+
       it('throws error when defining a factory without schema', () => {
         expect(() => {
           // @ts-expect-error: provided wrong setup to `define` for testing purposes.
