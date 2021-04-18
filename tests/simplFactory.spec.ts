@@ -45,8 +45,8 @@ describe('SimplFactory', () => {
             { foo: 3 },
             { name: 'john doe' },
           ]
-        })
-      })
+        });
+      });
 
       it('throws error when defining a factory without schema', () => {
         expect(() => {
