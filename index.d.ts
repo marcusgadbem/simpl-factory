@@ -4,18 +4,12 @@ import {
   Args,
 } from './src/types.d';
 
-declare const simplFactory: simplFactory.Api;
+declare const simplFactory: SimplFactory;
 
-declare namespace simplFactory {
-  interface Api {
-    define(factoryName: string, factory: Factory): void
-    create(factoryName: string, ...args: Args[]): FactorySchema
-    createList(
-      factoryName: string,
-      count: number,
-      ...args: Args[],
-    ): FactorySchema[]
-  }
+interface SimplFactory {
+  define(factoryName: string, factory: Factory): void
+  create<T = FactorySchema>(factoryName: string, ...args: Args[]): T
+  createList<T = FactorySchema>(factoryName: string, count: number, ...args: Args[]): T[]
 }
 
 export = simplFactory;
