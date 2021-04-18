@@ -10,7 +10,6 @@ import {
   FactoryList,
   FactorySchema,
   FactoryTraits,
-  Context,
   Args,
 } from './types.d';
 
@@ -26,7 +25,7 @@ export function renderFactory(
   registry: FactoryList,
   factoryName: string,
   traits: string[],
-  context: Context,
+  context: FactorySchema,
 ): FactorySchema {
   const {
     schema: factorySchema,
@@ -64,7 +63,7 @@ export function buildTraits(
 
 type ProcessedArgs = {
   traits: string[],
-  context: Context,
+  context: FactorySchema,
 };
 
 export function processArgs(args: Args[]): ProcessedArgs {

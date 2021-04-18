@@ -17,9 +17,5 @@ export type FactoryTraits = Record<
 
 export type Args =
   | string
-  | Context
-  | undefined;
-
-export type Context =
   | FactorySchema
-  | ((index: number) => FactorySchema);
+  | undefined;
