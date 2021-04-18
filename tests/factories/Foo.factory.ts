@@ -1,5 +1,5 @@
 import faker from 'faker';
-import SimplFactory from '../../src';
+import * as SimplFactory from '../../src';
 
 import './Bar.factory';
 

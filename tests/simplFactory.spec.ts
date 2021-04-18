@@ -1,4 +1,4 @@
-import SimplFactory from '../src';
+import * as SimplFactory from '../src';
 
 import './factories/Foo.factory';
 
