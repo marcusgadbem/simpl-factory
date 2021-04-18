@@ -16,7 +16,7 @@
     "factory",
     "seed"
   ],
-  "module": "./src/index",
+  "main": "./src/index",
   "types": "index.d.ts",
   "scripts": {
     "start": "nodemon src/index.ts",

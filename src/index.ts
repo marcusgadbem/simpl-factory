@@ -1,1 +1,1 @@
-export * as default from './simplFactory';
+export { define, create, createList } from './simplFactory';
