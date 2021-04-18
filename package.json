@@ -1,6 +1,6 @@
 {
   "name": "simpl-factory",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simpl objects factory for Node/JavaScript",
   "license": "MIT",
   "repository": "marcusgadbem/simpl-factory",
